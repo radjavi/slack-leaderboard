@@ -38,17 +38,36 @@ export default SlackFunction(
       };
     }
 
-    const formatted_rows = inputs.leaderboard_stats.sort((r1, r2) =>
-      r2.rating - r1.rating
-    ).map((row, index) => {
-      return `${index + 1}.\t${
-        row.rating.toFixed(1)
-      }\t${row.wins}\t${row.losses}\t<@${row.user_id}>`;
+    const headers = ["#", "Rating", "Won", "Lost", "Name"];
+    const rows: string[][] = inputs.leaderboard_stats
+      .sort((r1, r2) => r2.rating - r1.rating)
+      .map((row, index) => [
+        `${index + 1}.`,
+        (row.rating | 0).toString(),
+        row.wins.toString(),
+        row.losses.toString(),
+        `<@${row.user_id}>`,
+      ]);
+    const matrix_with_headers: string[][] = [headers, ...rows];
+
+    const max_length_in_columns: number[] = headers.map((_, column_index) => {
+      const column = matrix_with_headers.map((row) => row[column_index]);
+      return Math.max(...column.map((value) => value.length));
     });
+
+    const formatted_rows: string[] = matrix_with_headers.map((row) =>
+      row.flatMap((column, column_index) =>
+        column_index < headers.length - 1
+          ? [
+            column,
+            " ".repeat(max_length_in_columns[column_index] + 2 - column.length),
+          ]
+          : [column]
+      )
+    ).map((rows) => rows.join(""));
 
     const formatted_leaderboard = [
       "```",
-      "#\tRating\tWon\tLost\tName",
       ...formatted_rows,
       "```",
     ].join("\n");

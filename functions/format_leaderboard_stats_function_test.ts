@@ -41,6 +41,10 @@ Deno.test("Should format existing leaderboard", async () => {
   );
   await assertEquals(
     outputs?.formatted_leaderboard,
-    "```\n#\tRating\tWon\tLost\tName\n1.\t1030.5\t2\t0\t<@U0000001>\n2.\t969.5\t0\t2\t<@U0000002>\n```",
+    "```\n" +
+      "#   Rating  Won  Lost  Name\n" +
+      "1.  1030    2    0     <@U0000001>\n" +
+      "2.  969     0    2     <@U0000002>\n" +
+      "```",
   );
 });

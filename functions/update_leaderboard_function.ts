@@ -66,7 +66,7 @@ async function getStatsForUser(
     : null;
 
   return {
-    id: user_stats?.id ?? crypto.randomUUID,
+    id: user_stats?.id ?? crypto.randomUUID(),
     leaderboard_name: user_stats?.leaderboard_name ?? leaderboard_name,
     user_id: user_stats?.user_id ?? user_id,
     wins: user_stats?.wins ?? 0,
@@ -109,18 +109,33 @@ export default SlackFunction(
       rating: opponent_new_rating,
     };
 
-    await client.apps.datastore.put<typeof LeaderboardDatastore.definition>(
+    const response1 = await client.apps.datastore.put<
+      typeof LeaderboardDatastore.definition
+    >(
       {
         datastore: "Leaderboard",
         item: my_new_stats,
       },
     );
-    await client.apps.datastore.put<typeof LeaderboardDatastore.definition>(
+
+    if (!response1.ok) {
+      console.error(response1.errors);
+      return { error: `Failed to put leaderboard stats: ${response1.error}` };
+    }
+
+    const response2 = await client.apps.datastore.put<
+      typeof LeaderboardDatastore.definition
+    >(
       {
         datastore: "Leaderboard",
         item: opponent_new_stats,
       },
     );
+
+    if (!response2.ok) {
+      console.error(response2.errors);
+      return { error: `Failed to put leaderboard stats: ${response2.error}` };
+    }
 
     const updatedMsg = `:tada: <@${
       i_am_winner ? me : my_opponent

@@ -98,14 +98,14 @@ export default SlackFunction(
 
     const my_new_stats = {
       ...my_stats,
-      wins: i_am_winner ? my_stats.wins++ : my_stats.wins,
-      losses: i_am_winner ? my_stats.losses : my_stats.losses++,
+      wins: i_am_winner ? my_stats.wins + 1 : my_stats.wins,
+      losses: i_am_winner ? my_stats.losses : my_stats.losses + 1,
       rating: my_new_rating,
     };
     const opponent_new_stats = {
       ...opponent_stats,
-      wins: i_am_winner ? opponent_stats.wins : opponent_stats.wins++,
-      losses: i_am_winner ? opponent_stats.losses++ : opponent_stats.losses,
+      wins: i_am_winner ? opponent_stats.wins : opponent_stats.wins + 1,
+      losses: i_am_winner ? opponent_stats.losses + 1 : opponent_stats.losses,
       rating: opponent_new_rating,
     };
 

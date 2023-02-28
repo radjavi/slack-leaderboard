@@ -83,6 +83,14 @@ export default SlackFunction(
     const { leaderboard_name, me, my_opponent, i_am_winner } =
       inputs.match_report;
 
+    if (me == my_opponent) {
+      return {
+        outputs: {
+          updatedMsg: ":warning: You can't report a game against yourself!",
+        },
+      };
+    }
+
     const my_stats = await getStatsForUser(client, leaderboard_name, me);
     const opponent_stats = await getStatsForUser(
       client,

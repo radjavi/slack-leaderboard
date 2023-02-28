@@ -61,3 +61,21 @@ Deno.test("Should report myself as loser", async () => {
     ":tada: <@U0000002> won against <@U0000001>",
   );
 });
+
+Deno.test("Should not be able to report against myself", async () => {
+  const inputs = {
+    match_report: {
+      leaderboard_name: "pingpong",
+      me: "U0000001",
+      my_opponent: "U0000001",
+      i_am_winner: true,
+    },
+  };
+  const { outputs } = await UpdateLeaderboardFunction(
+    createContext({ inputs }),
+  );
+  await assertEquals(
+    outputs?.updatedMsg,
+    ":warning: You can't report a game against yourself!",
+  );
+});

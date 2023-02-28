@@ -86,7 +86,8 @@ export default SlackFunction(
     if (me == my_opponent) {
       return {
         outputs: {
-          updatedMsg: ":warning: You can't report a game against yourself!",
+          updatedMsg:
+            `:warning: <@${me}>, you can't report a game against yourself!`,
         },
       };
     }

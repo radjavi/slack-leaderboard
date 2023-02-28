@@ -76,6 +76,6 @@ Deno.test("Should not be able to report against myself", async () => {
   );
   await assertEquals(
     outputs?.updatedMsg,
-    ":warning: You can't report a game against yourself!",
+    ":warning: <@U0000001>, you can't report a game against yourself!",
   );
 });

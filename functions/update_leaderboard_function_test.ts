@@ -40,7 +40,7 @@ Deno.test("Should report myself as winner", async () => {
   );
   await assertEquals(
     outputs?.updatedMsg,
-    ":tada: <@U0000001> won against <@U0000002>",
+    ":tada: <@U0000001> won against <@U0000002> (16 points :twisted_rightwards_arrows:)",
   );
 });
 
@@ -58,7 +58,7 @@ Deno.test("Should report myself as loser", async () => {
   );
   await assertEquals(
     outputs?.updatedMsg,
-    ":tada: <@U0000002> won against <@U0000001>",
+    ":tada: <@U0000002> won against <@U0000001> (16 points :twisted_rightwards_arrows:)",
   );
 });
 

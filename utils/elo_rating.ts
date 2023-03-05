@@ -13,13 +13,11 @@ export default function calculateRating(
   R_B: number,
   S_A: number,
 ): [number, number] {
-  const S_B = 1 - S_A;
-
   const E_A = 1 / (1 + 10 ** ((R_B - R_A) / 400));
-  const E_B = 1 / (1 + 10 ** ((R_A - R_B) / 400));
 
-  const R_A2 = R_A + K * (S_A - E_A);
-  const R_B2 = R_B + K * (S_B - E_B);
+  const diff = Math.round(K * (S_A - E_A));
+  const R_A2 = R_A + diff;
+  const R_B2 = R_B - diff;
 
   return [R_A2, R_B2];
 }

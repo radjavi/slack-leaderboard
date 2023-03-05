@@ -11,6 +11,6 @@ Deno.test("Should calculate elo rating for two equally rated players", () => {
 Deno.test("Should calculate elo rating for two unequally rated players", () => {
   const [R_A2, R_B2] = calculateRating(1016, 984, 0);
 
-  assertEquals(R_A2.toFixed(1), "998.5");
-  assertEquals(R_B2.toFixed(1), "1001.5");
+  assertEquals(R_A2, 999);
+  assertEquals(R_B2, 1001);
 });

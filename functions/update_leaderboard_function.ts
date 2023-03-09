@@ -146,7 +146,7 @@ export default SlackFunction(
       return { error: `Failed to put leaderboard stats: ${response2.error}` };
     }
 
-    const rating_points_diff = Math.abs(my_new_rating - my_stats.rating);
+    const rating_points_diff = Math.abs(my_new_rating - my_stats.rating) | 0;
     const updatedMsg = `:tada: <@${
       i_am_winner ? me : my_opponent
     }> won against <@${

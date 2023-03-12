@@ -4,6 +4,7 @@ import ShowLeaderboardWorkflow from "./workflows/show_leaderboard_workflow.ts";
 import LeaderboardDatastore from "./datastores/leaderboard_datastore.ts";
 import { MatchReportType } from "./types/match_report.ts";
 import { LeaderboardRowType } from "./types/leaderboard_row.ts";
+import ClearLeaderboardWorkflow from "./workflows/clear_leaderboard_workflow.ts";
 
 /**
  * The app manifest contains the app's configuration. This
@@ -13,8 +14,12 @@ import { LeaderboardRowType } from "./types/leaderboard_row.ts";
 export default Manifest({
   name: "Leaderboard",
   description: "Keeping track of leaders",
-  icon: "assets/default_new_app_icon.png",
-  workflows: [ReportWorkflow, ShowLeaderboardWorkflow],
+  icon: "assets/private/logo.png",
+  workflows: [
+    ReportWorkflow,
+    ShowLeaderboardWorkflow,
+    ClearLeaderboardWorkflow,
+  ],
   outgoingDomains: [],
   types: [MatchReportType, LeaderboardRowType],
   datastores: [LeaderboardDatastore],

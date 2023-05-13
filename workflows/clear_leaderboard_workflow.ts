@@ -51,24 +51,22 @@ const leaderboard = ClearLeaderboardWorkflow.addStep(
   },
 );
 
-const clearLeaderboard = ClearLeaderboardWorkflow.addStep(
+ClearLeaderboardWorkflow.addStep(
   ClearLeaderboardDefinition,
   {
     leaderboard_stats: leaderboardStats.outputs.leaderboard_stats,
   },
 );
 
-const updatedMsg = clearLeaderboard.outputs.success == true
-  ? `:broom: <@${ClearLeaderboardWorkflow.inputs.triggered_user}> cleared the leaderboard with the following reason: ` +
-    "`" + inputForm.outputs.fields.reason + "`\n" +
-    `Final state was:\n` +
-    leaderboard.outputs.formatted_leaderboard
-  : `:warning: <@${ClearLeaderboardWorkflow.inputs.triggered_user}> failed to clear leaderboard: ` +
-    clearLeaderboard.outputs.message;
+const message =
+  `:broom: <@${ClearLeaderboardWorkflow.inputs.triggered_user}> cleared the leaderboard with the following reason: ` +
+  "`" + inputForm.outputs.fields.reason + "`\n" +
+  `Final state was:\n` +
+  leaderboard.outputs.formatted_leaderboard;
 
 ClearLeaderboardWorkflow.addStep(Schema.slack.functions.SendMessage, {
   channel_id: ClearLeaderboardWorkflow.inputs.triggered_channel,
-  message: updatedMsg,
+  message,
 });
 
 export default ClearLeaderboardWorkflow;

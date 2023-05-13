@@ -15,29 +15,12 @@ export const ClearLeaderboardDefinition = DefineFunction({
     },
     required: ["leaderboard_stats"],
   },
-  output_parameters: {
-    properties: {
-      success: {
-        type: Schema.types.boolean,
-      },
-      message: {
-        type: Schema.types.string,
-      },
-    },
-    required: ["success"],
-  },
 });
 
 export default SlackFunction(
   ClearLeaderboardDefinition,
   async ({ inputs, client }) => {
     const leaderboard_stats = inputs.leaderboard_stats;
-
-    if (leaderboard_stats.length == 0) {
-      return {
-        outputs: { success: false, message: "Leaderboard is already empty" },
-      };
-    }
 
     for (const item of leaderboard_stats) {
       const deleted = await client.apps.datastore.delete({
@@ -51,6 +34,6 @@ export default SlackFunction(
       }
     }
 
-    return { outputs: { success: true } };
+    return { outputs: {} };
   },
 );
